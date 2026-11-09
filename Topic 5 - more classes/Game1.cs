@@ -3,6 +3,9 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
+using Topic_5___more_classe;
+
+
 
 enum Screen
 {
@@ -31,6 +34,8 @@ namespace Topic_5___more_classes
         Random generator;
         private string i;
 
+        Ghost ghost1;
+
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -49,7 +54,9 @@ namespace Topic_5___more_classes
 
             _graphics.ApplyChanges();
 
+            ghostTextures = new List<Texture2D>();
 
+            ghost1 = new Ghost(ghostTextures, new Rectangle(150, 250, 40, 40));
 
             base.Initialize();
         }
@@ -75,6 +82,8 @@ namespace Topic_5___more_classes
                 Exit();
 
             // TODO: Add your update logic here
+            mouseState = Mouse.GetState();
+            ghost1.Update(mouseState);
 
             base.Update(gameTime);
         }
@@ -84,6 +93,10 @@ namespace Topic_5___more_classes
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
+            _spriteBatch.Begin();
+            _spriteBatch.Draw(backgroundTexture, window, Color.White);
+            ghost1.Draw(_spriteBatch);
+            _spriteBatch.End();
 
             base.Draw(gameTime);
         }
