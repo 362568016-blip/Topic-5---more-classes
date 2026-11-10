@@ -28,6 +28,8 @@ namespace Topic_5___more_classes
 
         Texture2D playerTexture;
         Texture2D backgroundTexture;
+        Texture2D startTexture;
+        Texture2D endTexture;
 
         MouseState mouseState;
 
@@ -35,6 +37,8 @@ namespace Topic_5___more_classes
         private string i;
 
         Ghost ghost1;
+
+        KeyboardState keyboardState;
 
         public Game1()
         {
@@ -54,6 +58,8 @@ namespace Topic_5___more_classes
 
             _graphics.ApplyChanges();
 
+            screen = Screen.Title;
+
             ghostTextures = new List<Texture2D>();
 
             ghost1 = new Ghost(ghostTextures, new Rectangle(150, 250, 40, 40));
@@ -69,6 +75,8 @@ namespace Topic_5___more_classes
 
             backgroundTexture = Content.Load<Texture2D>("Images/haunted-background");
             playerTexture = Content.Load<Texture2D>("Images/mario");
+            startTexture = Content.Load<Texture2D>("Images/bedbackground");
+            endTexture = Content.Load<Texture2D>("Images/endScreen");
 
             for (int i = 1; i < 9; i++)
             {
@@ -85,6 +93,20 @@ namespace Topic_5___more_classes
             mouseState = Mouse.GetState();
             ghost1.Update(mouseState);
 
+            if (screen == Screen.Title)
+            {
+                if (keyboardState.IsKeyDown(Keys.Enter))
+                    screen = Screen.House;
+
+            }
+            else if (screen == Screen.House)
+            {
+                ghost1.Update(gameTime, mouseState);
+                if (ghost1.Contains(mouseState.Position))
+                    screen = Screen.End;
+
+            }
+
             base.Update(gameTime);
         }
 
@@ -96,6 +118,15 @@ namespace Topic_5___more_classes
             _spriteBatch.Begin();
             _spriteBatch.Draw(backgroundTexture, window, Color.White);
             ghost1.Draw(_spriteBatch);
+            if (screen == Screen.Title)
+                _spriteBatch.Draw(startTexture, window, Color.White);
+            else if (screen == Screen.House)
+            {
+                _spriteBatch.Draw(backgroundTexture, window, Color.White);
+                ghost1.Draw(_spriteBatch);
+            }
+            else
+                _spriteBatch.Draw(endTexture, window, Color.White);
             _spriteBatch.End();
 
             base.Draw(gameTime);
