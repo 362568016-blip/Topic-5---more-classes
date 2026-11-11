@@ -21,12 +21,12 @@ namespace Topic_5___more_classe
     private float _seconds;
 
 
-        public Rectangle Rect
+    public Rectangle Rect
     {
         get { return _location; }
     }
     public Ghost(List<Texture2D> textures, Rectangle location)
-        {
+    {
         _textures = textures;
         _textureIndex = 0;
         _speed = Vector2.Zero;
@@ -34,7 +34,7 @@ namespace Topic_5___more_classe
         _direction = SpriteEffects.None;
         _animationSpeed = 0.2f;
         _seconds = 0;
-        }
+    }
 
     public void Draw(SpriteBatch spriteBatch)
     {
@@ -56,33 +56,7 @@ namespace Topic_5___more_classe
             _direction,
             1);
         }
-        public void Update(MouseState mouseState) 
-        {
-            if (mouseState.X < _location.X)
-            {
-                _direction = SpriteEffects.FlipHorizontally;
-            }
-            else if (mouseState.X > _location.X)
-            {
-                _direction = SpriteEffects.None;
-            }
-            _speed = Vector2.Zero;
-            if (mouseState.X < _location.X)
-            {
-                _direction = SpriteEffects.FlipHorizontally;
-                _speed.X = -1;
-            }
-            else if (mouseState.X > _location.X)
-            {
-                _direction = SpriteEffects.None;
-                _speed.X = 1;
-            }
-            if (mouseState.LeftButton == ButtonState.Released)
-            {
-                _speed = Vector2.Zero; // Sets speed to zero if mouse not clicked
-            }
-            _location.Offset(_speed);
-        }
+        
         public void Update(GameTime gameTime, MouseState mouseState)
         {
             // Only move if the mouse button is down
@@ -91,7 +65,55 @@ namespace Topic_5___more_classe
                 _speed = Vector2.Zero; // Sets speed to zero if mouse not clicked
                 _textureIndex = 0;
                 _seconds = 0f;
+            }
+            else
+            {
+                _speed = Vector2.Zero;
+                if (mouseState.X < _location.X)
+                {
+                    _direction = SpriteEffects.FlipHorizontally;
+                }
+                else if (mouseState.X > _location.X)
+                {
+                    _direction = SpriteEffects.None;
+                }
 
+                if (mouseState.X < _location.X)
+                {
+                    _direction = SpriteEffects.FlipHorizontally;
+                    _speed.X = -1;
+                }
+                else if (mouseState.X > _location.X)
+                {
+                    _direction = SpriteEffects.None;
+                    _speed.X = 1;
+                }
+                if (mouseState.Y < _location.Y)
+                {
+                    _direction = SpriteEffects.FlipHorizontally;
+                }
+                else if (mouseState.Y > _location.Y)
+                {
+                    _direction = SpriteEffects.None;
+                }
+
+                if (mouseState.Y < _location.Y)
+                {
+                    _direction = SpriteEffects.FlipHorizontally;
+                    _speed.Y = -1;
+                }
+                else if (mouseState.Y > _location.Y)
+                {
+                    _direction = SpriteEffects.None;
+                    _speed.Y = 1;
+                }
+
+
+
+                if (mouseState.LeftButton == ButtonState.Released)
+                {
+                    _speed = Vector2.Zero; // Sets speed to zero if mouse not clicked
+                }
                 if (_speed != Vector2.Zero) // Ghost is moving
                 {
                     _seconds += (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -104,10 +126,24 @@ namespace Topic_5___more_classe
 
                     }
                 }
-                _location.Offset(_speed);
+
             }
+
+            _location.Offset(_speed);
+
+
+
+
+
         }
+
+        public bool Contains(Point location)
+        {
+            return _location.Contains(location);
+        }
+
     }
-
-
 }
+
+
+

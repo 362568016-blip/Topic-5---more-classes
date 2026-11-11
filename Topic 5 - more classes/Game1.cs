@@ -25,6 +25,7 @@ namespace Topic_5___more_classes
         private SpriteBatch _spriteBatch;
 
         List<Texture2D> ghostTextures;
+        List<Rectangle> ghostRects;
 
         Texture2D playerTexture;
         Texture2D backgroundTexture;
@@ -64,6 +65,8 @@ namespace Topic_5___more_classes
 
             ghost1 = new Ghost(ghostTextures, new Rectangle(150, 250, 40, 40));
 
+
+
             base.Initialize();
         }
 
@@ -86,12 +89,14 @@ namespace Topic_5___more_classes
 
         protected override void Update(GameTime gameTime)
         {
+            keyboardState = Keyboard.GetState();
+            mouseState = Mouse.GetState();
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
             // TODO: Add your update logic here
             mouseState = Mouse.GetState();
-            ghost1.Update(mouseState);
+            ghost1.Update(gameTime, mouseState);
 
             if (screen == Screen.Title)
             {
