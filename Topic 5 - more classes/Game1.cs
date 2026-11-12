@@ -24,8 +24,9 @@ namespace Topic_5___more_classes
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
+
         List<Texture2D> ghostTextures;
-        List<Rectangle> ghostRects;
+        List<Ghost> ghosts;
 
         Texture2D playerTexture;
         Texture2D backgroundTexture;
@@ -63,11 +64,20 @@ namespace Topic_5___more_classes
 
             ghostTextures = new List<Texture2D>();
 
-            ghost1 = new Ghost(ghostTextures, new Rectangle(150, 250, 40, 40));
-
+            ghosts = new List<Ghost>();
 
 
             base.Initialize();
+
+
+
+            ghost1 = new Ghost(ghostTextures, new Rectangle(150, 250, 40, 40));
+            for(int i = 0; i < 25; i++)
+            {
+                ghosts.Add(new Ghost(ghostTextures, new Rectangle(generator.Next(800), generator.Next(500), 40, 40)));
+
+            }
+
         }
 
         protected override void LoadContent()
@@ -80,6 +90,7 @@ namespace Topic_5___more_classes
             playerTexture = Content.Load<Texture2D>("Images/mario");
             startTexture = Content.Load<Texture2D>("Images/bedbackground");
             endTexture = Content.Load<Texture2D>("Images/endScreen");
+            playerTexture = Content.Load<Texture2D>("Images/mario");
 
             for (int i = 1; i < 9; i++)
             {
@@ -96,7 +107,7 @@ namespace Topic_5___more_classes
 
             // TODO: Add your update logic here
             mouseState = Mouse.GetState();
-            ghost1.Update(gameTime, mouseState);
+            
 
             if (screen == Screen.Title)
             {
@@ -106,9 +117,13 @@ namespace Topic_5___more_classes
             }
             else if (screen == Screen.House)
             {
-                ghost1.Update(gameTime, mouseState);
-                if (ghost1.Contains(mouseState.Position))
-                    screen = Screen.End;
+                foreach (Ghost ghost in ghosts)
+                {
+                    ghost.Update(gameTime, mouseState);
+                    if (ghost.Contains(mouseState.Position))
+                        screen = Screen.End;
+                }
+                    
 
             }
 
@@ -128,10 +143,12 @@ namespace Topic_5___more_classes
             else if (screen == Screen.House)
             {
                 _spriteBatch.Draw(backgroundTexture, window, Color.White);
-                ghost1.Draw(_spriteBatch);
+                foreach (Ghost ghost in ghosts)
+                    ghost.Draw(_spriteBatch);
             }
             else
                 _spriteBatch.Draw(endTexture, window, Color.White);
+            _spriteBatch.Draw(playerTexture, (mouseState.Position(Mouse)), Color.White);
             _spriteBatch.End();
 
             base.Draw(gameTime);

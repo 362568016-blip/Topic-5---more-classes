@@ -88,23 +88,16 @@ namespace Topic_5___more_classe
                     _direction = SpriteEffects.None;
                     _speed.X = 1;
                 }
-                if (mouseState.Y < _location.Y)
-                {
-                    _direction = SpriteEffects.FlipHorizontally;
-                }
-                else if (mouseState.Y > _location.Y)
-                {
-                    _direction = SpriteEffects.None;
-                }
+                
 
                 if (mouseState.Y < _location.Y)
                 {
-                    _direction = SpriteEffects.FlipHorizontally;
+                    //_direction = SpriteEffects.FlipHorizontally;
                     _speed.Y = -1;
                 }
                 else if (mouseState.Y > _location.Y)
                 {
-                    _direction = SpriteEffects.None;
+                    //_direction = SpriteEffects.None;
                     _speed.Y = 1;
                 }
 
