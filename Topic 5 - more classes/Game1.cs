@@ -46,7 +46,7 @@ namespace Topic_5___more_classes
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            IsMouseVisible = true;
+            IsMouseVisible = false;
         }
 
         protected override void Initialize()
@@ -65,17 +65,17 @@ namespace Topic_5___more_classes
             ghostTextures = new List<Texture2D>();
 
             ghosts = new List<Ghost>();
+            
+            int size = generator.Next(40, 40);
 
+            ghost1 = new Ghost(ghostTextures, new Rectangle(generator.Next(150), generator.Next(250), size, size));
 
             base.Initialize();
 
-
-
-            ghost1 = new Ghost(ghostTextures, new Rectangle(150, 250, 40, 40));
+           
             for(int i = 0; i < 25; i++)
             {
-                ghosts.Add(new Ghost(ghostTextures, new Rectangle(generator.Next(800), generator.Next(500), 40, 40)));
-
+                ghosts.Add(new Ghost(ghostTextures, new Rectangle(generator.Next(800), generator.Next(500), size, size)));
             }
 
         }
@@ -148,7 +148,7 @@ namespace Topic_5___more_classes
             }
             else
                 _spriteBatch.Draw(endTexture, window, Color.White);
-            _spriteBatch.Draw(playerTexture, (mouseState.Position(Mouse)), Color.White);
+            //_spriteBatch.Draw(playerTexture, (mouseState.Position()), Color.White);
             _spriteBatch.End();
 
             base.Draw(gameTime);
