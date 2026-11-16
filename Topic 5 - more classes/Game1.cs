@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using Topic_5___more_classe;
 
-
+//i give up
 
 enum Screen
 {
@@ -32,6 +32,7 @@ namespace Topic_5___more_classes
         Texture2D backgroundTexture;
         Texture2D startTexture;
         Texture2D endTexture;
+        Rectangle ghostRect;
 
         MouseState mouseState;
 
@@ -68,14 +69,19 @@ namespace Topic_5___more_classes
             
             int size = generator.Next(40, 40);
 
-            ghost1 = new Ghost(ghostTextures, new Rectangle(generator.Next(150), generator.Next(250), size, size));
+            //ghost1 = new Ghost(ghostTextures, new Rectangle(generator.Next(150), generator.Next(250), size, size));
 
             base.Initialize();
 
            
             for(int i = 0; i < 25; i++)
             {
-                ghosts.Add(new Ghost(ghostTextures, new Rectangle(generator.Next(800), generator.Next(500), size, size)));
+                //ghost1 = generator.Next(150, 250, size, size);
+
+                ghosts.Add
+                (
+                    new Ghost(ghostTextures, new Rectangle(generator.Next(800), generator.Next(500), size, size))
+                );
             }
 
         }
